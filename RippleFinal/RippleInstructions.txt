@@ -1,0 +1,23 @@
+Ripple Instructions for use(changes may need to be made for non windows systems)
+1)go to github.com/Ghannebaum/Ripple_Spring2016 and download the RippleFinal folder
+
+2)once downloaded, open the folder and open RippleStart.txt
+RippleStart.txt is a text file containing the information the Ripple code needs for your specific system, with examples of the information that will need to be changed to configure for your system. 
+
+3)Next, connect the Arduinos to the system and upload the coorisponding code to each arduino.
+To upload to arduino open the code you want to upload in the arduino software,
+ECG/Resp. code is ads1292r_Final
+Pulse Ox code is PulseOx_Final,
+next select tools from the menubar and ensure the port the arduino is connected to is selected
+next select upload
+
+4)Once both arduinos are connected and their coorisponding code has been uploaded the MATLAB GUI program is ready to begin.
+Open RippleGUI2.m 
+Line 162 is the only line that will need changed between systems, it contains the filepath for the RippleStart.txt file
+Update this line with the file path on your system and select start.
+
+5)The gui interface will launch
+select start data collection and the program will launch the python code in your system command prompt and begin streaming the data to text files
+MATLAB will collect the data from these text files and begin graphing them
+If there is a problem check and make sure the RippleStart.txt file has been updated correctly and check line 162 of the MATLAB GUI code is leading to the correct location.
+
