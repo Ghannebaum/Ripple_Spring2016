@@ -159,6 +159,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 
 %% Opening Serial Communications start other scripts
 %% Initialize variables.
+%collect filepaths from RippleStart.txt
 filename = 'C:\Users\Skyler\Desktop\RippleFinal\RippleStart.txt';
 delimiter = '::';
 formatSpec = '%s%*s%[^\n\r]';
@@ -168,7 +169,7 @@ fclose(fileID);
 StartFileData = dataArray{:, 2};
 clearvars filename delimiter formatSpec fileID dataArray ans;
 %%
-
+%Set filepaths that were collected from RippleStart.txt
 filename = cell2mat(StartFileData(7));
 pythonFilePath= strcat(cell2mat(StartFileData(8)),' &');
 py=system(pythonFilePath);
@@ -201,7 +202,6 @@ RespRate = 'none';
 %Sp02 filter:
 %25 tap, lowpass fir filter of the first order with cutoff at Nyquest freq. 0.08
 fir = fir1(25,0.08);
-fir2 = fir1(25,0.08);
 %flag timer inizialize
 
 HRflag1Last = tic;
@@ -239,16 +239,13 @@ while(py==0)
     IR = FileData{:, 4}';
     Red = FileData{:, 5}';
     SpO2 = FileData{:, 6}';
-    %     if(~isempty(DataPoint))
-    %         nLines = DataPoint(length(DataPoint));
-    %     end
+
     %% Data manipulation
     if(length(ECG)>50)
         %Detrend data
         ECG = detrend(ECG,'constant');
         %Filter out powerline and other noise
         ECG =  sgolayfilt(ECG,7,21);
-       % ECG = filter(fir,1,ECG);
         Resp = sgolayfilt(Resp,3,31);
         IR = filter(fir,1,IR);
         Red = filter(fir,1,Red);
@@ -264,9 +261,6 @@ while(py==0)
         
         %% Calculations
         %% SpO2
-        % Calculate Sp02 (done on arduino now)
-        %         SpO2 = (log(yVal_Red(1,1))/log(yVal_IR(1,1))*2);
-        %         Per_SpO2 = 100 - SpO2;
         SpO2Samples=0;
         SpO2Total=0;
         for j = 1:length(SpO2)
@@ -330,8 +324,8 @@ while(py==0)
             set(handles.edit3, 'string', num2str(RespRate));
         end
         
-        %% Flags
-        if(nLines>1550)
+        %% Flags(if statments descripe the condition being tested) 
+        if(nLines>1550)%Only check for flags after enough data has been collected to determine flag states
             %Heart rate flags
             if((avgBPM < 40) )
                 if(mod(HRflag1Last ,toc(HRflag1Last)) >30)
