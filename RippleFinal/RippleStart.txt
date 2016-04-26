@@ -1,0 +1,8 @@
+1)Start file for Ripple, change these values according to your system(keep the double colons,keep same format)
+2)Info for Python, first is data file path, next is ECG com #, next is ppg com #
+C:\Users\Skyler\Desktop\RippleFinal\ECG_Resp_PPG.txt
+COM3
+COM4
+6)Info for MATLAB
+7)Data text file path:: C:\Users\Skyler\OneDrive\Ripple\ECG_Resp_PPG.txt
+8)python file path:: C:/Users/Skyler/Desktop/RippleFinal/ADSandAFEArduinoSerial2(usedwithstartfile).py
